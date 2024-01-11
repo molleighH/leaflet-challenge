@@ -241,7 +241,7 @@
 //    };
 
 // Define URL for the GeoJSON earthquake data
-let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
+let url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
 
 // Create the map
 let myMap = L.map("map", {
