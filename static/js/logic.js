@@ -3,6 +3,95 @@
 let queryURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
 let tectonicplatesUrl = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json"
 
+
+let myMap = L.map("map", {
+    center: [37.09, -95.71],
+    zoom: 5
+});
+
+// Define a baseMaps object to hold our base layers
+let baseMaps = {
+    "Satellite": L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v11/tiles/256/{z}/{x}/{y}?" +
+    "access_token=<KEY>"),
+    "Grayscale": L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}?" +
+    "access_token=<KEY>")
+};
+
+// Create overlay object to hold our overlay layer
+let overlayMaps = {
+    "Earthquakes": L.geoJSON(null, {
+        pointToLayer: function(feature, latlng) {
+            return L.circleMarker(latlng, {
+                radius: markerSize(feature.properties.mag),
+                color: chooseColor(feature.geometry.coordinates[2]),
+                fillOpacity: 0.75,
+                fillColor: chooseColor(feature.geometry.coordinates[2])
+            });
+        },
+        onEachFeature: function(feature, layer) {
+            layer.bindPopup("<h3>" + feature.properties.place +
+            "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
+        }
+    })
+};
+
+// Create our map, giving it the streetmap and earthquakes layers to display on load
+L.map("map", {
+    center: [37.09, -95.71],
+    zoom: 5,
+    layers: [baseMaps.Satellite, overlayMaps.Earthquakes]
+});
+
+// Create a layer control
+// Pass in our baseMaps and overlayMaps
+// Add the layer control to the map
+L.control.layers(baseMaps, overlayMaps, {
+    collapsed: false
+}).addTo(myMap);
+
+// Perform a GET request to the query URL
+d3.json(queryURL).then(function(data){
+    // Create a GeoJSON layer containing the features array on the earthquakeData object
+    L.geoJSON(data.features, {
+        // Define a function that will determine the color of a given feature
+        // Give each feature a popup with the name of the place and time of the earthquake
+        pointToLayer: function(feature, latlng) {
+            return L.circleMarker(latlng, {
+                radius: markerSize(feature.properties.mag),
+                color: chooseColor(feature.geometry.coordinates[2]),
+                fillOpacity: 0.75,
+                fillColor: chooseColor(feature.geometry.coordinates[2])
+            });
+        },
+        onEachFeature: function(feature, layer) {
+            layer.bindPopup("<h3>" + feature.properties.place +
+            "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
+        }
+    }).addTo(overlayMaps.Earthquakes);
+
+    // Send our earthquakes layer to the createMap function/
+    createMap(overlayMaps.Earthquakes);
+});
+
+// Perform a GET request to the query URL
+d3.json(tectonicplatesUrl).then(function(data){
+    // Create a GeoJSON layer containing the features array on the tectonicplates object
+    L.geoJSON(data.features, {
+        color: "orange",
+        weight: 2
+    }).addTo(myMap);
+});
+
+// Create a function to create map
+function createMap(earthquakes) {
+    // Define streetmap and darkmap layers
+    let streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/256/{z}/{x}/{y}?" +
+    "access_token=<KEY>");
+    let darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/dark-v10/
+    tiles/256/{z}/{x}/{y}?" +
+    "access_token=<KEY>");
+
+// -------------------------------------------------------------------------------------------------------------------------------
 // Use D3 to perform GET request to queryURL
 d3.json(queryURL).then(function(data){
     // Console log data retrieved 
