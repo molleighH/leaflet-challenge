@@ -262,7 +262,7 @@ d3.json(url).then(function (data) {
             fillOpacity: 1,
             fillColor: mapColor(feature.geometry.coordinates[2]),
             color: "black",
-            radius: mapRadius(feature.properties.mag)
+            radius: mapRadius(feature.properties.mag),
             stroke: true,
             weight: 0.5
         };
