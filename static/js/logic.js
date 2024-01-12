@@ -312,6 +312,7 @@ d3.json(url).then(function (data) {
 
 // Setup legend
     let legend = L.control({ position: "bottomright" });
+    
     legend.onAdd = function () {
         let div = L.DomUtil.create("div", "info legend"); 
         let depths = [-10, 10, 30, 50, 70, 90];
