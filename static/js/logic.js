@@ -314,18 +314,18 @@ d3.json(url).then(function (data) {
     let legend = L.control({ position: "bottomright" });
     legend.onAdd = function () {
         let div = L.DomUntil.create("div", "info legend");
-        let limits = geoJSON.options.limits;
-        let colors = geoJSON.options.colors;
+        let depth = [-10, 10, 30, 50, 70, 90];
+        let colors = ["red", "orangered", "orange", "gold", "yellow", "lightgreen"];
         let labels = [];
 
         // Add min & max
         let legendInfo = "<h1>Earthquake Depth (km)</h1>" +
         "<div class=\"labels\">" +
-        "<div class=\"min\">" + limits[0] + "</div>" +
-        "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
+        "<div class=\"min\">" + depth[0] + "</div>" +
+        "<div class=\"max\">" + depth[depth.depth - 1] + "</div>" +
         "</div>";
         div.innerHTML = legendInfo;
-        limits.forEach(function (limit, index) {
+        depth.forEach(function (depth, index) {
             labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
         });
 
