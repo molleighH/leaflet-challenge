@@ -313,13 +313,13 @@ d3.json(url).then(function (data) {
 // Setup legend
     let legend = L.control({ position: "bottomright" });
     legend.onAdd = function () {
-        let div = L.DomUntil.create("div", "info legend");
+        let div = L.DomUtil.create("div", "info legend"); 
         let depths = [-10, 10, 30, 50, 70, 90];
         let colors = ["red", "orangered", "orange", "gold", "yellow", "lightgreen"];
         let labels = [];
 
         for (let i = 0; i < depths.length; i++) {
-            legend += '<div><i style="background:' + colors[i] + '"></i> ' +
+            legend += '<div><li style="background:' + colors[i] + '"></li> ' +
       depths[i] + (depths[i + 1] ? '&ndash;' + depths[i + 1] + '<br>' : '+') + '</div>';
   }
 
@@ -329,6 +329,7 @@ d3.json(url).then(function (data) {
         "<div class=\"min\">" + depths[0] + "</div>" +
         "<div class=\"max\">" + depths[depths.depths - 1] + "</div>" +
         "</div>";
+        
         div.innerHTML = legendInfo;
         depths.forEach(function (depths, index) {
             labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
