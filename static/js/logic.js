@@ -314,18 +314,23 @@ d3.json(url).then(function (data) {
     let legend = L.control({ position: "bottomright" });
     legend.onAdd = function () {
         let div = L.DomUntil.create("div", "info legend");
-        let depth = [-10, 10, 30, 50, 70, 90];
+        let depths = [-10, 10, 30, 50, 70, 90];
         let colors = ["red", "orangered", "orange", "gold", "yellow", "lightgreen"];
         let labels = [];
 
+        for (let i = 0; i < depths.length; i++) {
+            legend += '<div><i style="background:' + colors[i] + '"></i> ' +
+      depths[i] + (depths[i + 1] ? '&ndash;' + depths[i + 1] + '<br>' : '+') + '</div>';
+  }
+
         // Add min & max
-        let legendInfo = "<h1>Earthquake Depth (km)</h1>" +
+        let legendInfo = "<h3>Earthquake Depth (km)</h3>" +
         "<div class=\"labels\">" +
-        "<div class=\"min\">" + depth[0] + "</div>" +
-        "<div class=\"max\">" + depth[depth.depth - 1] + "</div>" +
+        "<div class=\"min\">" + depths[0] + "</div>" +
+        "<div class=\"max\">" + depths[depths.depths - 1] + "</div>" +
         "</div>";
         div.innerHTML = legendInfo;
-        depth.forEach(function (depth, index) {
+        depths.forEach(function (depths, index) {
             labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
         });
 
