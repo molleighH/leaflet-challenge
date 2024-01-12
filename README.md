@@ -30,3 +30,5 @@ The USGS is interested in building a new set of tools that will allow them to vi
 * Git clone the repo
 * Open repo in code editor
 * Add and save your mapbox API key in <code style="color : aqua">config.js</code> file inside of <code style="color : aqua">static/js</code> folder 
+    * export <code style="color : aqua">const api_key = ' YOUR API KEY ';</code>
+* Visit [local host](http://localhost:5000/) in your browser
