@@ -256,7 +256,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // Retrieve & add earthquake data to map   
 d3.json(url).then(function (data) {
-    function mapStyle(feature) {   
+    function mapStyle(feature) {
         return {
             opacity: 1,
             fillOpacity: 1,
@@ -270,7 +270,7 @@ d3.json(url).then(function (data) {
 
     // Establish colors for depth 
     function mapColor(depth) {
-        switch(true) {
+        switch (true) {
             case depth > 90:
                 return "red";
             case depth > 70:
@@ -281,7 +281,7 @@ d3.json(url).then(function (data) {
                 return "gold";
             case depth > 10:
                 return "yellow";
-            default: 
+            default:
                 return "lightgreen";
         }
     }
@@ -310,16 +310,52 @@ d3.json(url).then(function (data) {
         }
     }).addTo(myMap);
 
-    // Add legend with colors to corrolate w/depth 
-    let legend = L.control({position: "bottomright"});
-    legend.onAdd = function() {
-        let div = L.DomUntil.create("div", "info legend"),
-        depth = [-10, 10, 30, 50, 70, 90];
+// Setup legend
+    let legend = L.control({ position: "bottomright" });
+    legend.onAdd = function () {
+        let div = L.DomUntil.create("div", "info legend");
+        let limits = geoJSON.options.limits;
+        let colors = geoJSON.options.colors;
+        let labels = [];
 
-        for (let i = 0; i < depth.length; i++) {
-            div.innerHTML += '<i style="background:' + mapColor(depth[i] + 1) + '"></i>' + depth[i] + (depth[i + 1] ? '&ndash;' + depth[i + 1] + '<br>' : '+');
-        }
+        // Add min & max
+        let legendInfo = "<h1>Earthquake Depth (km)</h1>" +
+        "<div class=\"labels\">" +
+        "<div class=\"min\">" + limits[0] + "</div>" +
+        "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
+        "</div>";
+        div.innerHTML = legendInfo;
+        limits.forEach(function (limit, index) {
+            labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+        });
+
+        div.innerHTML += "<ul>" + labels.join("") + "</ul>";
         return div;
+
     };
+
+    // Add legend to map
     legend.addTo(myMap);
-});
+}); 
+
+
+    // Add legend with colors to corrolate w/depth 
+//    let legend = L.control({ position: "bottomright" });
+//    legend.onAdd = function () {
+//        let div = L.DomUntil.create("div", "info legend"),
+//        let depth = [-10, 10, 30, 50, 70, 90];
+//        div.innerHTML += "<h3 style='text-align: center'>Depth</h3>"
+//        for (let i = 0; i < depth.length; i++) {
+//            div.innerHTML += '<i style="background:' + mapColor(depth[i] + 1) + '"></i> '
+//        }
+//        return div;
+//
+        // Add legend with colors to corrolate w/depth
+//        for (let i = 0; i < depth.length; i++) {
+//            div.innerHTML += '<i style="background:' + mapColor(depth[i] + 1) + '"></i> '
+//        }
+//       return div;
+//    };
+//    legend.addTo(myMap);
+//})
+//    ;
