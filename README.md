@@ -1,3 +1,3 @@
 # leaflet-challenge
 
-<a href=“file:///Users/molleighhughes/Documents/GitHub/leaflet-challenge/index.html”>
+[HTML Deployed](https://molleighH.github.io/leaflet-challenge/)
