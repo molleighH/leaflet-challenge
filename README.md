@@ -5,7 +5,7 @@
 [Link to Earthquake Dashboard](https://molleighH.github.io/leaflet-challenge/)
 
 
-<img align="right" width="350" height="250" src="https://github.com/molleighH/leaflet-challenge/blob/main/Images/Snapshot%20of%20Active%20Dashboard.png?raw=true">
+<img align="right" width="450" height="450" src="https://github.com/molleighH/leaflet-challenge/blob/main/Images/Snapshot%20of%20Active%20Dashboard.png?raw=true">
 
 <code style="color : aqua"> <samp>The United States Geological Survey, or USGS for short, is responsible for providing scientific data about natural hazards, the health of our ecosystems and environment, and the impacts of climate and land-use change. Their scientists develop new methods and tools to supply timely, relevant, and useful information about the Earth and its processes.
 <br>
@@ -29,4 +29,4 @@ The USGS is interested in building a new set of tools that will allow them to vi
 * Close repo and save to local directory
 * Git clone the repo
 * Open repo in code editor
-* Add and save your mapbox API key in <samp>config.js</samp> file inside of <samp>static/js</samp> folder 
+* Add and save your mapbox API key in <code style="color : aqua">config.js</code> file inside of <code style="color : aqua">static/js</code> folder 
